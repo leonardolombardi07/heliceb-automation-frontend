@@ -16,6 +16,8 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { SIUnit } from "@/app/modules/units";
 import UnitSelect from "../UnitSelect";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import useTheme from "@mui/material/styles/useTheme";
 
 type NumbersListFieldProps = TextFieldProps & {
   numbers: number[];
@@ -36,6 +38,7 @@ export default function NumbersListField({
   ...props
 }: NumbersListFieldProps) {
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
+  const isFullScreenDialog = useResponsiveFullScreenDialog();
 
   const [min, setMin] = React.useState<number>(
     Math.min(...numbers, ...numbers, 0)
@@ -129,6 +132,7 @@ export default function NumbersListField({
         }}
         open={isDialogOpen}
         onClose={closeDialog}
+        fullScreen={isFullScreenDialog}
       >
         <DialogTitle>Editar {`"${props.label}"`}</DialogTitle>
         <DialogContent>
@@ -221,7 +225,13 @@ export default function NumbersListField({
           </Box>
         </DialogContent>
 
-        <DialogActions>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            p: 2,
+          }}
+        >
           <Button onClick={closeDialog}>Voltar</Button>
         </DialogActions>
       </Dialog>
@@ -301,4 +311,9 @@ function generateNumbers(min: number, max: number, step: number) {
     numbers.push(i);
   }
   return numbers;
+}
+
+function useResponsiveFullScreenDialog() {
+  const theme = useTheme();
+  return useMediaQuery(theme.breakpoints.down("sm"));
 }
