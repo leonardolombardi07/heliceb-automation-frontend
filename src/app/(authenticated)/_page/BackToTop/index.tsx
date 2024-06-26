@@ -57,32 +57,18 @@ export default function BackToTop() {
             data-ga-event-category="docs"
             data-ga-event-action="click-back-to-top"
             sx={(theme) => ({
-              backgroundColor: theme.palette.primary[50],
-              border: `1px solid ${theme.palette.primary[200]}`,
+              backgroundColor: theme.palette.grey[200],
+              border: `1px solid ${theme.palette.grey[400]}`,
               boxShadow: `0px 4px 12px rgba(0, 0, 0, 0.1)`,
               "&:hover": {
-                backgroundColor: theme.palette.primary[200],
+                backgroundColor: theme.palette.grey[400],
               },
-
-              // TODO: apply dark style below
-              ...theme.applyStyles({
-                backgroundColor: theme.palette.primary[900],
-                borderColor: theme.palette.primary[700],
-                boxShadow: `0px 4px 12px rgba(0, 0, 0, 0.8)`,
-                "&:hover": {
-                  backgroundColor: theme.palette.primary[800],
-                },
-              }),
             })}
           >
             <KeyboardArrowUpRoundedIcon
-              sx={(theme: Theme) => ({
-                color: theme.palette.primary[800],
-                // TODO: apply dark style below
-                ...theme.applyStyles({
-                  color: theme.palette.primary[200],
-                }),
-              })}
+              sx={{
+                color: (t) => t.palette.grey[800],
+              }}
             />
           </Fab>
         </Box>
