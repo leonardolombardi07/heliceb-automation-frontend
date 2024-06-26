@@ -18,7 +18,9 @@ import { SIUnit } from "../modules/units";
 import { generateExcel } from "./_page/excel";
 
 function PageContent() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [formValues, setFormValues] = React.useState(DEFAULT_FORM_VALUES);
+  const [error, setError] = React.useState<string | null>(null);
 
   function onChangeValue(value: number, key: keyof FormValues) {
     setFormValues((prev) => ({
@@ -60,13 +62,28 @@ function PageContent() {
     });
   }
 
-  function onGenerateExcel() {
-    generateExcel(formValues);
+  async function onGenerateExcel() {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await generateExcel(formValues);
+    } catch (error: any) {
+      setError("Something went wrong! So sorry!");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
-    <Box>
-      <Header onGenerateExcel={onGenerateExcel} />
+    <Box sx={{ pb: 5 }}>
+      <Header
+        isLoading={isLoading}
+        onGenerateExcel={onGenerateExcel}
+        error={error}
+      />
 
       <SectionContainer>
         <SectionTitle id={TOC[0].hash}>{TOC[0].text}</SectionTitle>
@@ -374,7 +391,7 @@ function PageContent() {
 const TOC: TocItem[] = [
   {
     text: "Condições Ambientais",
-    hash: "ambiente",
+    hash: "condicoes-ambientais",
     children: [],
   },
 

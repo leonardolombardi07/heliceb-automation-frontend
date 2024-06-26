@@ -4,15 +4,22 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import { FormValues } from "../../types";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const BUTTON_TEXT = "Gerar Planilha";
 
 interface HeaderProps {
+  isLoading: boolean;
   onGenerateExcel: () => void;
+  error: string | null;
 }
 
-export default function Header({ onGenerateExcel }: HeaderProps) {
+export default function Header({
+  isLoading,
+  onGenerateExcel,
+  error,
+}: HeaderProps) {
   const fadeIn = useFadeInWhenOnTopAndFadeWhenNot();
 
   return (
@@ -47,11 +54,19 @@ export default function Header({ onGenerateExcel }: HeaderProps) {
 
       <Button
         variant="contained"
+        color="success"
         onClick={() => onGenerateExcel()}
         sx={{ mt: 2 }}
       >
-        {BUTTON_TEXT}
+        {isLoading ? "Gerando Planilha..." : BUTTON_TEXT}
       </Button>
+
+      {error && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          <AlertTitle>Erro</AlertTitle>
+          {error}
+        </Alert>
+      )}
 
       <Divider sx={{ mt: 2 }} />
     </Box>

@@ -113,10 +113,6 @@ function getSortedPropulsionSystems({
       cavitationLimit,
     });
 
-    if (cavitation_eval.result === "nok") {
-      continue;
-    }
-
     const kq = getCorrectedKq({
       J,
       PD,

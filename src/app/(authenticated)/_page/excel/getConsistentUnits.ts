@@ -32,7 +32,7 @@ export function getConsistentUnits(
       targetUnit: "m²/s",
     }),
     maxNumberOfResults: inconsistent.maxNumberOfResults.value,
-    minEfficiency: inconsistent.minEfficiency.value / 1000, // percentage to decimal
+    minEfficiency: inconsistent.minEfficiency.value / 100, // percentage to decimal
     minDeliveredThrust: convertBetweenSIUnits({
       value: inconsistent.minDeliveredThrust.value,
       unit: inconsistent.minDeliveredThrust.unit,
@@ -43,7 +43,7 @@ export function getConsistentUnits(
       unit: inconsistent.maxDeliveredThrust.unit,
       targetUnit: "N",
     }),
-    cavitationLimit: inconsistent.cavitationLimit.value / 1000, // percentage to decimal
+    cavitationLimit: inconsistent.cavitationLimit.value / 100, // percentage to decimal
     numberOfBlades: inconsistent.numberOfBlades.map((value) =>
       convertBetweenSIUnits({
         value: value.value,
